@@ -1,0 +1,57 @@
+1. Creating a FastAPI Application
+First, we create an application named app using FastAPI. This is done by instantiating the FastAPI class:
+
+from fastapi import FastAPI
+app = FastAPI()
+
+app is the main instance of the FastAPI application.
+It serves as the central object where all routes, configurations, and middleware are registered.
+
+2. GET Operation
+The GET method is an HTTP request method used to retrieve data from a server. In FastAPI, you define GET operations using path operation functions and decorators.
+
+@app.get("/")
+def root():
+    return {"data": {"name": "Sultan Zaib"}}
+
+root() is the path operation function. It handles requests to the / path.
+The @app.get("/") decorator binds the GET request for / to this function.
+When a client sends a GET request to /, the server responds with the returned JSON data.
+
+Key Terms:
+Path Operation Function: A Python function that handles requests and returns responses.
+
+Path Operation Decorator: The @app.get() decorator specifies the HTTP method and URL path.
+
+3. Path Parameters
+Path parameters allow you to pass dynamic values in the URL. They are defined using curly braces {} in the path and matched to function arguments.
+
+Example:
+@app.get("/items/{item_id}")
+def get_item(item_id: int):
+    return {"item_id": item_id}
+
+
+{item_id} is a path parameter.
+FastAPI automatically extracts the value from the URL and converts it to the type specified in the function (int in this case).
+Accessing /items/5 returns {"item_id": 5}.
+
+4. API Documentation (Swagger / ReDoc)
+FastAPI automatically generates interactive API documentation:
+Swagger UI: Available at /docs
+ReDoc: Available at /redoc
+These docs allow you to:
+View all endpoints and their details
+Send test requests from the browser
+See request/response schemas and validation rules
+
+5. Query Parameters
+Query parameters are optional parameters sent after ? in the URL. They are useful for filtering or modifying results.
+
+Example:
+@app.get("/items/")
+def read_item(skip: int = 0, limit: int = 10):
+    return {"skip": skip, "limit": limit}
+
+Accessing /items/?skip=5&limit=20 returns {"skip": 5, "limit": 20}.
+Query parameters are optional and can have default values.
